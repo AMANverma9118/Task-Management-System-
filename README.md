@@ -11,6 +11,11 @@ A simple RESTful API for managing tasks (To-Do app) built with Node.js, Express,
 - Swagger/OpenAPI documentation
 - ESLint and Prettier for code quality
 
+
+## Hosted API
+
+The API is deployed and available at: [https://task-management-system-36ub.onrender.com](https://task-management-system-36ub.onrender.com)
+
 ## Setup Instructions
 
 1. **Install dependencies:**
