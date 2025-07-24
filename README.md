@@ -1,10 +1,11 @@
+
 # Task Management System API
 
-A simple RESTful API for managing tasks (To-Do app) built with Node.js, Express, and TypeScript.
+A simple RESTful API for managing tasks (To-Do app) built with Node.js, Express, TypeScript, PostgreSQL, and Prisma ORM.
 
 ## Features
 - CRUD operations for tasks
-- In-memory data store
+- PostgreSQL database (via Prisma ORM)
 - Input validation (Joi)
 - Pagination, search, and filter
 - Swagger/OpenAPI documentation
@@ -16,22 +17,28 @@ A simple RESTful API for managing tasks (To-Do app) built with Node.js, Express,
    ```sh
    npm install
    ```
-2. **Run the server (development):**
+2. **Set up environment variables:**
+   - Create a `.env` file and add your PostgreSQL connection string as `DATABASE_URL`.
+3. **Generate Prisma client:**
+   ```sh
+   npx prisma generate
+   ```
+4. **Run the server (development):**
    ```sh
    npm run dev
    ```
-3. **Build and start (production):**
+5. **Build and start (production):**
    ```sh
    npm run build
    npm start
    ```
-4. **API Docs:**
+6. **API Docs:**
    Visit [http://localhost:3000/api-docs](http://localhost:3000/api-docs) for Swagger UI.
 
 ## API Endpoints
 
 ### Create a Task
-`POST /api/tasks`
+`POST /api/tasksInput`
 ```json
 {
   "title": "Buy groceries",
@@ -40,14 +47,14 @@ A simple RESTful API for managing tasks (To-Do app) built with Node.js, Express,
 }
 ```
 
-### Get All Tasks
-`GET /api/tasks?page=1&limit=10&status=PENDING&title=groceries`
+### Get All Tasks (with pagination, search, filter)
+`GET /api/tasksGetByFilter?page=1&limit=10&status=PENDING&title=groceries`
 
 ### Get Task by ID
-`GET /api/tasks/:id`
+`GET /api/tasksGetByID/{id}`
 
 ### Update Task
-`PUT /api/tasks/:id`
+`PUT /api/tasksUpdate/{id}`
 ```json
 {
   "title": "Buy groceries and fruits",
@@ -56,7 +63,7 @@ A simple RESTful API for managing tasks (To-Do app) built with Node.js, Express,
 ```
 
 ### Delete Task
-`DELETE /api/tasks/:id`
+`DELETE /api/tasksDelete/{id}`
 
 ## Task Object Structure
 ```
@@ -69,6 +76,14 @@ A simple RESTful API for managing tasks (To-Do app) built with Node.js, Express,
   "updatedAt": "timestamp"
 }
 ```
+
+## Technology Stack
+- Node.js
+- Express.js
+- TypeScript
+- PostgreSQL
+- Prisma ORM
+- Joi (validation)
 
 ## License
 MIT

@@ -9,26 +9,7 @@
     { "url": "http://localhost:3000/api" }
   ],
   "paths": {
-    "/tasks": {
-      "get": {
-        "summary": "Get all tasks",
-        "parameters": [
-          { "name": "page", "in": "query", "schema": { "type": "integer" }, "required": false },
-          { "name": "limit", "in": "query", "schema": { "type": "integer" }, "required": false },
-          { "name": "status", "in": "query", "schema": { "type": "string" }, "required": false },
-          { "name": "title", "in": "query", "schema": { "type": "string" }, "required": false }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of tasks",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/TasksResponse" }
-              }
-            }
-          }
-        }
-      },
+    "/tasksInput": {
       "post": {
         "summary": "Create a new task",
         "requestBody": {
@@ -51,7 +32,28 @@
         }
       }
     },
-    "/tasks/{id}": {
+    "/tasksGetByFilter": {
+      "get": {
+        "summary": "Get all tasks (with optional pagination, search, filter)",
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer" }, "required": false },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" }, "required": false },
+          { "name": "status", "in": "query", "schema": { "type": "string" }, "required": false },
+          { "name": "title", "in": "query", "schema": { "type": "string" }, "required": false }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of tasks",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TasksResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasksGetByID/{id}": {
       "get": {
         "summary": "Get a task by ID",
         "parameters": [
@@ -68,7 +70,9 @@
           },
           "404": { "description": "Task not found" }
         }
-      },
+      }
+    },
+    "/tasksUpdate/{id}": {
       "put": {
         "summary": "Update a task by ID",
         "parameters": [
@@ -93,14 +97,28 @@
           },
           "404": { "description": "Task not found" }
         }
-      },
+      }
+    },
+    "/tasksDelete/{id}": {
       "delete": {
         "summary": "Delete a task by ID",
         "parameters": [
           { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "204": { "description": "Task deleted" },
+          "200": {
+            "description": "Task deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
           "404": { "description": "Task not found" }
         }
       }
