@@ -65,10 +65,11 @@ A simple RESTful API for managing tasks (To-Do app) built with Node.js, Express,
 ### Delete Task
 `DELETE /api/tasksDelete/{id}`
 
+
 ## Task Object Structure
 ```
 {
-  "id": "uuid",
+  "id": "uuid", // All task IDs are generated using UUID (universally unique identifier)
   "title": "string",
   "description": "string",
   "status": "PENDING | COMPLETED | IN_PROGRESS",
