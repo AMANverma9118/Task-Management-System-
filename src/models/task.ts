@@ -1,4 +1,3 @@
-// Task model interface
 export type TaskStatus = 'PENDING' | 'COMPLETED' | 'IN_PROGRESS';
 
 export interface Task {

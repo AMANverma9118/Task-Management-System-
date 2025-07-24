@@ -52,3 +52,49 @@ export const getTaskById = async (req: Request, res: Response) => {
   }
 };
 
+// Update a task by ID
+export const updateTask = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { title, description, status } = req.body;
+    const task = await prisma.task.update({
+      where: { id },
+      data: {
+        ...(title && { title }),
+        ...(description && { description }),
+        ...(status && { status }),
+        updatedAt: new Date(),
+      },
+    });
+    res.json(task);
+  } catch (error) {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      (error as any).code === 'P2025'
+    ) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+    res.status(500).json({ message: 'Failed to update task', error });
+  }
+};
+
+// Delete a task by ID
+export const deleteTask = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await prisma.task.delete({ where: { id } });
+    res.status(200).json({ message: 'Task deleted successfully' });
+  } catch (error) {
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      (error as any).code === 'P2025'
+    ) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+    res.status(500).json({ message: 'Failed to delete task', error });
+  }
+};
